@@ -1,10 +1,7 @@
-import time
-import requests
-import threading
-import asyncio
-from flask import Flask
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from telegram import Update
+import requests
+import asyncio
 
 TELEGRAM_TOKEN = "7786469113:AAFjWtBSS24y3aVgEBFvcwbLNGHwcpQRg5g"
 ADMIN_ID = 1817896911
@@ -80,7 +77,7 @@ async def stop(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("ℹ️ Status check is not implemented.")
 
-def run_telegram_bot():
+def main():
     application = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("approve", approve))
@@ -89,13 +86,6 @@ def run_telegram_bot():
     application.add_handler(CommandHandler("status", status))
     application.run_polling()
 
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    return "Bot is running!"
-
 if __name__ == "__main__":
-    threading.Thread(target=run_telegram_bot).start()
-    app.run(host="0.0.0.0", port=10000)
+    main()
     
