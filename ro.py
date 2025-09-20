@@ -2,8 +2,6 @@ import time
 import requests
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from telegram import Update
-from flask import Flask
-import threading
 
 TELEGRAM_TOKEN = "7786469113:AAFjWtBSS24y3aVgEBFvcwbLNGHwcpQRg5g"
 ADMIN_ID = 1817896911
@@ -70,7 +68,6 @@ async def attack(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"⚠️ Network error: {e}")
         return
     await update.message.reply_text(f"⏳ Attack will run for {time_int} seconds...")
-    import asyncio
     await asyncio.sleep(time_int)
     await update.message.reply_text(f"✅ Attack on {ip}:{port} finished! 🎉🔥")
 
@@ -80,22 +77,7 @@ async def stop(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("ℹ️ Status check is not implemented.")
 
-def run_flask():
-    app = Flask(__name__)
-
-    @app.route("/")
-    def home():
-        return "Bot is running 24/7!"
-
-    app.run(host="0.0.0.0", port=10000)
-
 def main():
-    # Start Flask server in a separate thread
-    flask_thread = threading.Thread(target=run_flask)
-    flask_thread.daemon = True
-    flask_thread.start()
-
-    # Start Telegram bot
     application = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("approve", approve))
@@ -107,4 +89,3 @@ def main():
 if __name__ == "__main__":
     import asyncio
     main()
-    
